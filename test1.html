@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Inventory Management</title>
+    <link rel="stylesheet" href="test.css">
+</head>
+<body>
+
+<header>
+    <h1>Grocery Inventory Management</h1>
+</header>
+
+<div class="container">
+    <!-- Login Section -->
+    <button id="login-btn">Login with Mobile</button>
+    <button id="logout-btn" style="display: none;">Logout</button>
+
+    <!-- Language Selection -->
+    <div class="form-group">
+        <label for="language-select">Select Language:</label>
+        <select id="language-select">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="ta">Tamil</option>
+            <option value="te">Telugu</option>
+            <option value="bn">Bengali</option>
+        </select>
+    </div>
+
+    <!-- Inventory Table -->
+    <table id="inventory-table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Decrease Stock</th>
+                <th>Remove Product</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added dynamically -->
+        </tbody>
+    </table>
+
+    <!-- Add New Product -->
+    <div class="form-group">
+        <label for="product-name">Product Name:</label>
+        <input type="text" id="product-name" placeholder="Enter product name">
+
+        <label for="product-quantity">Quantity:</label>
+        <input type="number" id="product-quantity" placeholder="Enter quantity">
+
+        <button id="add-product-btn">Add Product</button>
+    </div>
+
+</div>
+
+<script src="test1.js"></script>
+</body>
+</html>
