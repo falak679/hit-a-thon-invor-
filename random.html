@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management for Grocery Sellers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #28a745;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1em;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #28a745;
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #28a745;
+            color: white;
+        }
+        footer {
+            background-color: #28a745;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Inventory Management System for Grocery Sellers</h1>
+</header>
+
+<main>
+    <div class="container">
+        <!-- Add New Item Section -->
+        <div class="section">
+            <h2>Add New Inventory Item</h2>
+            <form id="addItemForm">
+                <input type="text" id="itemName" placeholder="Item Name" required><br>
+                <input type="number" id="itemQuantity" placeholder="Quantity" required><br>
+                <input type="number" id="reorderLevel" placeholder="Reorder Level" required><br>
+                <button type="submit">Add Item</button>
+            </form>
+        </div>
+
+        <!-- Inventory List Section -->
+        <div class="section">
+            <h2>Current Inventory</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Quantity</th>
+                            <th>Reorder Level</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTable">
+                        <!-- Inventory items will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Notifications Section -->
+        <div class="section">
+            <h2>Low Stock Alerts</h2>
+            <ul id="alertList">
+                <!-- Alerts will appear here -->
+            </ul>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2024 Grocery Inventory Management</p>
+</footer>
+
+<script>
+    // Sample JavaScript for adding inventory and managing alerts
+    const addItemForm = document.getElementById('addItemForm');
+    const inventoryTable = document.getElementById('inventoryTable');
+    const alertList = document.getElementById('alertList');
+
+    let inventory = [];
+
+    // Add item to inventory
+    addItemForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const itemName = document.getElementById('itemName').value;
+        const itemQuantity = parseInt(document.getElementById('itemQuantity').value);
+        const reorderLevel = parseInt(document.getElementById('reorderLevel').value);
+
+        const newItem = { name: itemName, quantity: itemQuantity, reorderLevel: reorderLevel };
+        inventory.push(newItem);
+
+        updateInventoryTable();
+        checkStockAlerts();
+        addItemForm.reset();
+    });
+
+    // Update the inventory table
+    function updateInventoryTable() {
+        inventoryTable.innerHTML = '';
+        inventory.forEach((item, index) => {
+            const row = `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.reorderLevel}</td>
+                    <td><button onclick="deleteItem(${index})">Delete</button></td>
+                </tr>
+            `;
+            inventoryTable.innerHTML += row;
+        });
+    }
+
+    // Check for low stock and display alerts
+    function checkStockAlerts() {
+        alertList.innerHTML = '';
+        inventory.forEach(item => {
+            if (item.quantity <= item.reorderLevel) {
+                const alertItem = `<li>${item.name} is low on stock! Only ${item.quantity} left.</li>`;
+                alertList.innerHTML += alertItem;
+            }
+        });
+    }
+
+    // Delete an item from inventory
+    function deleteItem(index) {
+        inventory.splice(index, 1);
+        updateInventoryTable();
+        checkStockAlerts();
+    }
+</script>
+
+</body>
+</html>
